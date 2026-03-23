@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-atkinson), sans-serif;
+  }
+
+  body {
+    background-color: theme('colors.brand.bg');
+    color: theme('colors.brand.text');
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: theme('colors.brand.primary');
+    color: theme('colors.brand.contrast');
+    @apply font-bold py-2.5 px-5 rounded-lg
+           hover:opacity-90 active:opacity-80
+           disabled:opacity-40 disabled:cursor-not-allowed
+           transition-opacity duration-150 text-sm;
+  }
+
+  .btn-secondary {
+    background-color: theme('colors.brand.surface');
+    color: theme('colors.brand.text');
+    border: 1px solid rgb(43 43 43 / 0.2);
+    @apply font-medium py-2.5 px-5 rounded-lg
+           hover:opacity-80 active:opacity-70
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-opacity duration-150 text-sm;
+  }
+
+  .btn-danger {
+    background-color: rgb(230 49 27 / 0.1);
+    color: theme('colors.brand.error');
+    @apply font-medium py-1.5 px-3 rounded-md
+           hover:bg-red-100 active:bg-red-200
+           disabled:opacity-50 disabled:cursor-not-allowed
+           transition-colors duration-150 text-xs;
+  }
+
+  .input-field {
+    background-color: theme('colors.brand.surface');
+    border: 1px solid rgb(43 43 43 / 0.2);
+    @apply w-full rounded-lg px-4 py-2.5 text-sm
+           focus:outline-none focus:ring-2 focus:border-transparent
+           placeholder:opacity-40;
+    --tw-ring-color: theme('colors.brand.primary');
+  }
+
+  .card {
+    background-color: theme('colors.brand.surface');
+    border: 1px solid rgb(43 43 43 / 0.1);
+    @apply rounded-xl shadow-sm;
+  }
+}
