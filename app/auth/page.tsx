@@ -54,8 +54,8 @@ export default function AuthPage() {
     setError(null);
 
     const trimmedOtp = otp.trim();
-    if (trimmedOtp.length !== 8 || !/^\d+$/.test(trimmedOtp)) {
-      setError("Le code doit contenir exactement 8 chiffres.");
+    if (trimmedOtp.length !== 6 || !/^\d+$/.test(trimmedOtp)) {
+      setError("Le code doit contenir exactement 6 chiffres.");
       return;
     }
 
@@ -154,23 +154,23 @@ export default function AuthPage() {
                 Entrez votre code
               </h2>
               <div className="bg-brand-bg border border-brand-text/15 text-brand-text text-sm px-4 py-3 rounded-lg mb-5">
-                Un code à 8 chiffres a été envoyé à <span className="font-medium">{email}</span>.
+                Un code à 6 chiffres a été envoyé à <span className="font-medium">{email}</span>.
               </div>
 
               <form onSubmit={handleVerifyOtp} className="space-y-4">
                 <div>
                   <label htmlFor="otp" className="block text-sm font-medium text-brand-text mb-1.5">
-                    Code à 8 chiffres
+                    Code à 6 chiffres
                   </label>
                   <input
                     id="otp"
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    maxLength={8}
+                    maxLength={6}
                     value={otp}
                     onChange={(e) => { setOtp(e.target.value.replace(/\D/g, "")); setError(null); }}
-                    placeholder="12345678"
+                    placeholder="123456"
                     className="input-field text-center text-xl tracking-widest font-mono"
                     required
                     autoFocus
@@ -184,7 +184,7 @@ export default function AuthPage() {
                   </div>
                 )}
 
-                <button type="submit" disabled={loading || otp.length !== 8} className="btn-primary w-full flex items-center justify-center gap-2">
+                <button type="submit" disabled={loading || otp.length !== 6} className="btn-primary w-full flex items-center justify-center gap-2">
                   {loading ? (
                     <><svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>Vérification…</>
                   ) : "Se connecter"}
