@@ -32,7 +32,7 @@ export default function NavBar({ currentProfile, activeTab }: Props) {
           <div className="flex items-center gap-6">
             {/* Logo */}
             <Image
-              src="/favicon.png"
+              src="/logo.png"
               alt="RURA"
               width={64}
               height={20}

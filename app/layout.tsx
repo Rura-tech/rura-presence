@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${atkinson.variable} ${inter.variable}`}>
       <body className="min-h-screen bg-brand-bg text-brand-text">
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         {children}
       </body>
     </html>
