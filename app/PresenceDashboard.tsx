@@ -442,13 +442,18 @@ function MonthCell({ day, currentProfile, toggling, onClick }: {
     >
       {/* Day number */}
       <div className="flex items-center justify-between mb-1.5">
-        <span className={`text-sm font-bold leading-none ${
-          day.isToday
-            ? "w-6 h-6 bg-brand-primary text-white rounded-full flex items-center justify-center text-xs"
-            : "text-brand-text"
-        }`}>
-          {format(day.date, "d")}
-        </span>
+        <div className="flex items-center gap-1">
+          <span className={`text-sm font-bold leading-none ${
+            day.isToday
+              ? "w-6 h-6 bg-brand-primary text-white rounded-full flex items-center justify-center text-xs"
+              : "text-brand-text"
+          }`}>
+            {format(day.date, "d")}
+          </span>
+          {day.currentUserPresent && (
+            <span className="w-2 h-2 rounded-full bg-brand-success flex-shrink-0 sm:hidden" />
+          )}
+        </div>
         {toggling && (
           <svg className="animate-spin h-3 w-3 text-brand-text/40" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -457,18 +462,23 @@ function MonthCell({ day, currentProfile, toggling, onClick }: {
         )}
       </div>
 
-      {/* My presence indicator */}
+      {/* My presence indicator — desktop only (mobile shown next to day number) */}
       {day.currentUserPresent && (
-        <div className="w-full mb-1 bg-brand-success rounded text-xs text-brand-contrast font-medium px-1.5 py-0.5 text-center leading-tight">
+        <div className="w-full mb-1 bg-brand-success rounded text-xs text-brand-contrast font-medium px-1.5 py-0.5 text-center leading-tight hidden sm:block">
           Présent(e)
         </div>
       )}
 
       {/* Total count */}
       {total > 0 && (
-        <p className="text-xs font-medium text-brand-text/50">
-          {total} {total <= 1 ? "personne" : "personnes"}
-        </p>
+        <>
+          <p className="text-xs font-medium text-brand-text/50 hidden sm:block">
+            {total} {total <= 1 ? "personne" : "personnes"}
+          </p>
+          <p className="text-xs font-medium text-brand-text/50 sm:hidden">
+            {total} prsn
+          </p>
+        </>
       )}
     </button>
   );
