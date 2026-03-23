@@ -93,7 +93,7 @@ export default function AuthPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <Image
-            src="/logo.png"
+            src="/favicon.png"
             alt="RURA"
             width={160}
             height={48}
