@@ -183,6 +183,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
   const selectedDateObj = parseISO(selectedDate);
   const dateLabel = format(selectedDateObj, "EEEE d MMMM yyyy", { locale: fr });
   const isTodaySelected = isToday(selectedDateObj);
+  const sortedSalles = [...salles].sort((a, b) => a.capacite - b.capacite);
 
   return (
     <div className="min-h-screen bg-brand-surface">
@@ -301,7 +302,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
           </div>
         ) : (
           <div className="space-y-4">
-            {salles.map((salle) => {
+            {sortedSalles.map((salle) => {
               const salleReservations = reservations.filter(
                 (r) => r.salle_id === salle.id
               );
@@ -335,7 +336,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
       {showForm && (
         <BookingModal
           form={form}
-          salles={salles}
+          salles={sortedSalles}
           submitting={submitting}
           error={formError}
           onChange={(updates) => {
