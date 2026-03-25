@@ -264,10 +264,10 @@ export default function PresenceDashboard({ currentProfile }: Props) {
             {/* Legend */}
             <div className="mt-6 flex items-center gap-5 text-xs text-brand-text/40">
               <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-brand-success inline-block" />Présent(e)
+                <span className="w-3 h-3 rounded-full bg-brand-success inline-block" />Au bureau
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-brand-text/20 inline-block" />Absent(e)
+                <span className="w-3 h-3 rounded-full bg-brand-text/20 inline-block" />Absent
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded-full bg-brand-text/10 border border-brand-text/10 inline-block" />Passé
@@ -337,7 +337,7 @@ function DayCard({ day, currentProfile, toggling, onToggle }: {
         </button>
       ) : (
         <div className={`w-full py-2 px-3 rounded-lg text-sm font-medium text-center ${day.currentUserPresent ? "bg-brand-success/20 text-brand-text/70" : "bg-brand-text/5 text-brand-text/30"}`}>
-          {day.currentUserPresent ? "Présent(e)" : "Absent(e)"}
+          {day.currentUserPresent ? "Au bureau" : "Absent"}
         </div>
       )}
 
@@ -465,7 +465,7 @@ function MonthCell({ day, currentProfile, toggling, onClick }: {
       {/* My presence indicator — desktop only (mobile shown next to day number) */}
       {day.currentUserPresent && (
         <div className="w-full mb-1 bg-brand-success rounded text-xs text-brand-contrast font-medium px-1.5 py-0.5 text-center leading-tight hidden sm:block">
-          Présent(e)
+          Au bureau
         </div>
       )}
 
