@@ -183,7 +183,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
   const selectedDateObj = parseISO(selectedDate);
   const dateLabel = format(selectedDateObj, "EEEE d MMMM yyyy", { locale: fr });
   const isTodaySelected = isToday(selectedDateObj);
-  const sortedSalles = [...salles].sort((a, b) => a.capacite - b.capacite);
+  const sortedSalles = [...salles].sort((a, b) => b.capacite - a.capacite);
 
   return (
     <div className="min-h-screen bg-brand-surface">
