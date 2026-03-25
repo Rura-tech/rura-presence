@@ -188,7 +188,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
     <div className="min-h-screen bg-brand-surface">
       <NavBar currentProfile={currentProfile} activeTab="salles" />
 
-      <main className="max-w-5xl mx-auto px-4 py-6">
+      <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div>
