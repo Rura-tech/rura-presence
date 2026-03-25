@@ -269,9 +269,6 @@ export default function PresenceDashboard({ currentProfile }: Props) {
               <span className="flex items-center gap-1.5">
                 <span className="w-3 h-3 rounded-full bg-brand-text/20 inline-block" />Absent
               </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-brand-text/10 border border-brand-text/10 inline-block" />Passé
-              </span>
             </div>
           </>
         ) : (
