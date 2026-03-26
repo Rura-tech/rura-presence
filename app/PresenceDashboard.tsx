@@ -267,7 +267,7 @@ export default function PresenceDashboard({ currentProfile }: Props) {
                 <span className="w-3 h-3 rounded-full bg-brand-success inline-block" />Au bureau
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-brand-text/20 inline-block" />Absent
+                <span className="w-3 h-3 rounded-full bg-brand-text/20 inline-block" />Télétravail
               </span>
             </div>
           </>
@@ -334,7 +334,7 @@ function DayCard({ day, currentProfile, toggling, onToggle }: {
         </button>
       ) : (
         <div className={`w-full py-2 px-3 rounded-lg text-sm font-medium text-center ${day.currentUserPresent ? "bg-brand-success/20 text-brand-text/70" : "bg-brand-text/5 text-brand-text/30"}`}>
-          {day.currentUserPresent ? "Au bureau" : "Absent"}
+          {day.currentUserPresent ? "Au bureau" : "Télétravail"}
         </div>
       )}
 
