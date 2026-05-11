@@ -9,7 +9,7 @@ import type { Profile } from "@/lib/types";
 
 interface Props {
   currentProfile: Profile;
-  activeTab: "presence" | "salles";
+  activeTab: "presence";
 }
 
 export default function NavBar({ currentProfile, activeTab }: Props) {
@@ -49,16 +49,6 @@ export default function NavBar({ currentProfile, activeTab }: Props) {
                 }`}
               >
                 Présence
-              </Link>
-              <Link
-                href="/salles"
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === "salles"
-                    ? "bg-brand-primary/10 text-brand-primary"
-                    : "text-brand-text/60 hover:text-brand-text hover:bg-brand-bg"
-                }`}
-              >
-                Salles
               </Link>
             </nav>
           </div>

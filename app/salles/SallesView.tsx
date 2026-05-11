@@ -187,7 +187,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
 
   return (
     <div className="min-h-screen bg-brand-surface">
-      <NavBar currentProfile={currentProfile} activeTab="salles" />
+      <NavBar currentProfile={currentProfile} activeTab="presence" />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-2 py-6">
         {/* Header */}
