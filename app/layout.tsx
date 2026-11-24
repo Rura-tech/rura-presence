@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Atkinson_Hyperlegible, Inter } from "next/font/google";
+import { Atkinson_Hyperlegible, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const atkinson = Atkinson_Hyperlegible({
@@ -12,6 +12,15 @@ const atkinson = Atkinson_Hyperlegible({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Sous-titre éditorial, en italique uniquement.
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -33,8 +42,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${atkinson.variable} ${inter.variable}`}>
-      <body className="min-h-screen bg-brand-bg text-brand-text">
+    <html lang="fr" className={`${atkinson.variable} ${inter.variable} ${playfair.variable}`}>
+      <body className="min-h-screen bg-creme text-noir">
         <link rel="apple-touch-icon" href="/favicon.png" />
         {children}
       </body>

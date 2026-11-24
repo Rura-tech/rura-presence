@@ -1,3 +1,8 @@
+-- Schéma initial (mars 2026).
+-- Les évolutions suivantes sont dans migrations/ :
+--   001_forfait_jours.sql      statut de contrat, lien hiérarchique, déclarations mensuelles
+--   002_hierarchie_initiale.sql amorçage des liens hiérarchiques et des droits RH
+
 -- Enable RLS on all tables (done per table below)
 
 -- profiles table

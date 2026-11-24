@@ -90,14 +90,14 @@ export default function InscriptionPage() {
 
   if (checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-brand-bg">
-        <div className="text-brand-text/40 text-sm">Chargement…</div>
+      <div className="min-h-screen flex items-center justify-center bg-creme">
+        <div className="text-black60 type-p14">Chargement…</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-brand-bg">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-creme">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -108,18 +108,18 @@ export default function InscriptionPage() {
             height={48}
             className="h-12 w-auto mx-auto mb-2"
           />
-          <h1 className="text-2xl font-bold text-brand-text font-title">
+          <h1 className="text-2xl font-bold text-noir">
             Bienvenue sur RURA Présence
           </h1>
-          <p className="text-brand-text/50 mt-1 text-sm">
+          <p className="text-black60 mt-1 type-p14">
             Complétez votre profil pour commencer
           </p>
         </div>
 
         <div className="card p-8">
           {userEmail && (
-            <div className="bg-brand-bg border border-brand-text/15 rounded-lg px-4 py-3 mb-6 text-sm text-brand-text/60">
-              Connecté avec : <span className="font-medium text-brand-text">{userEmail}</span>
+            <div className="bg-creme border border-contour rounded-carte px-4 py-3 mb-6 type-p14 text-black60">
+              Connecté avec : <span className="font-medium text-noir">{userEmail}</span>
             </div>
           )}
 
@@ -127,7 +127,7 @@ export default function InscriptionPage() {
             <div>
               <label
                 htmlFor="prenom"
-                className="block text-sm font-medium text-brand-text mb-1.5"
+                className="block type-p14 font-medium text-noir mb-1.5"
               >
                 Prénom
               </label>
@@ -150,7 +150,7 @@ export default function InscriptionPage() {
             <div>
               <label
                 htmlFor="nom"
-                className="block text-sm font-medium text-brand-text mb-1.5"
+                className="block type-p14 font-medium text-noir mb-1.5"
               >
                 Nom de famille
               </label>
@@ -167,13 +167,13 @@ export default function InscriptionPage() {
                 required
                 autoComplete="family-name"
               />
-              <p className="mt-1.5 text-xs text-brand-text/40">
+              <p className="mt-1.5 type-p14 text-black60">
                 Sera affiché en majuscules.
               </p>
             </div>
 
             {error && (
-              <div className="bg-brand-error/10 border border-brand-error/20 text-brand-error text-sm px-4 py-3 rounded-lg">
+              <div className="bg-rouge/10 border border-rouge/20 text-rouge type-p14 px-4 py-3 rounded-carte">
                 {error}
               </div>
             )}

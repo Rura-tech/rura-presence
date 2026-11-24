@@ -6,10 +6,12 @@ import { fr } from "date-fns/locale";
 import { createClient } from "@/lib/supabase/client";
 import type { Profile, Salle, Reservation } from "@/lib/types";
 import NavBar from "../NavBar";
+import type { NavState } from "@/lib/nav";
 
 interface Props {
   currentProfile: Profile;
   salles: Salle[];
+  navState: NavState;
 }
 
 // Time slots: 8h to 19h, 30 min increments
@@ -43,7 +45,7 @@ interface BookingForm {
   titre: string;
 }
 
-export default function SallesView({ currentProfile, salles }: Props) {
+export default function SallesView({ currentProfile, salles, navState }: Props) {
   const [selectedDate, setSelectedDate] = useState<string>(
     format(new Date(), "yyyy-MM-dd")
   );
@@ -186,15 +188,15 @@ export default function SallesView({ currentProfile, salles }: Props) {
   const sortedSalles = [...salles].sort((a, b) => b.capacite - a.capacite);
 
   return (
-    <div className="min-h-screen bg-brand-surface">
-      <NavBar currentProfile={currentProfile} activeTab="presence" />
+    <div className="min-h-screen bg-blanc">
+      <NavBar currentProfile={currentProfile} activeTab="presence" navState={navState} />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-2 py-6">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div>
-            <h2 className="text-xl font-bold text-brand-text font-title">Réservation de salles</h2>
-            <p className="text-sm text-brand-text/50 mt-0.5 capitalize">{dateLabel}</p>
+            <h2 className="type-h3 text-noir">Réservation de salles</h2>
+            <p className="type-p14 text-black60 mt-0.5 capitalize">{dateLabel}</p>
           </div>
           <button
             onClick={() => {
@@ -279,7 +281,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
               onClick={() =>
                 setSelectedDate(format(new Date(), "yyyy-MM-dd"))
               }
-              className="btn-secondary text-xs w-full sm:w-auto"
+              className="btn-secondary type-p14 w-full sm:w-auto"
             >
               Aujourd&apos;hui
             </button>
@@ -296,7 +298,7 @@ export default function SallesView({ currentProfile, salles }: Props) {
         ) : salles.length === 0 ? (
           <div className="card p-8 text-center text-gray-400">
             <p>Aucune salle configurée.</p>
-            <p className="text-sm mt-1">
+            <p className="type-p14 mt-1">
               Ajoutez des salles dans le tableau de bord Supabase.
             </p>
           </div>
@@ -380,11 +382,11 @@ function RoomTimeline({
   return (
     <div className="card overflow-hidden">
       {/* Room header */}
-      <div className="px-4 py-3 bg-brand-bg border-b border-brand-text/10 flex items-center justify-between">
+      <div className="px-4 py-3 bg-creme border-b border-contour flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-brand-primary/10 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-orange/10 rounded-carte flex items-center justify-center">
             <svg
-              className="w-4 h-4 text-brand-primary"
+              className="w-4 h-4 text-orange"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -398,11 +400,11 @@ function RoomTimeline({
             </svg>
           </div>
           <div>
-            <p className="font-semibold text-brand-text text-sm">{salle.nom}</p>
-            <p className="text-xs text-brand-text/40">{salle.capacite} personnes max.</p>
+            <p className="font-semibold text-noir type-p14">{salle.nom}</p>
+            <p className="type-p14 text-black60">{salle.capacite} personnes max.</p>
           </div>
         </div>
-        <span className="text-xs text-brand-text/40">
+        <span className="type-p14 text-black60">
           {reservations.length}{" "}
           {reservations.length <= 1 ? "réservation" : "réservations"}
         </span>
@@ -419,7 +421,7 @@ function RoomTimeline({
             return (
               <span
                 key={h}
-                className={`absolute text-xs text-brand-text/30 -translate-x-1/2 ${
+                className={`absolute type-p14 text-black60 -translate-x-1/2 ${
                   isEven ? "hidden sm:block" : ""
                 }`}
                 style={{ left: `${pct}%` }}
@@ -432,7 +434,7 @@ function RoomTimeline({
 
         {/* Track */}
         <div
-          className="relative h-10 bg-brand-bg rounded-lg overflow-hidden cursor-pointer group"
+          className="relative h-10 bg-creme rounded-carte overflow-hidden cursor-pointer group"
           onClick={() => onBookSlot("09:00", "10:00")}
           title="Cliquez pour réserver"
         >
@@ -442,7 +444,7 @@ function RoomTimeline({
             return (
               <div
                 key={h}
-                className="absolute top-0 bottom-0 w-px bg-brand-text/10"
+                className="absolute top-0 bottom-0 w-px bg-blanc2"
                 style={{ left: `${pct}%` }}
               />
             );
@@ -450,7 +452,7 @@ function RoomTimeline({
 
           {/* Hover hint */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <span className="text-xs text-brand-text/40">
+            <span className="type-p14 text-black60">
               Cliquez pour réserver
             </span>
           </div>
@@ -465,10 +467,10 @@ function RoomTimeline({
             return (
               <div
                 key={r.id}
-                className={`absolute top-0 h-full flex flex-col justify-center px-1.5 overflow-hidden select-none transition-opacity hover:opacity-90 ${
+                className={`absolute top-0 h-full flex flex-col justify-center px-1.5 overflow-hidden select-none transition-colors ${
                   isOwn
-                    ? "bg-brand-primary"
-                    : "bg-brand-text/40"
+                    ? "bg-orange"
+                    : "bg-noir/40"
                 }`}
                 style={{
                   left: `${startPct}%`,
@@ -478,10 +480,10 @@ function RoomTimeline({
                 title={`${r.titre} — ${r.profiles?.prenom} ${r.profiles?.nom} (${r.heure_debut.slice(0, 5)}–${r.heure_fin.slice(0, 5)})`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-white text-xs font-medium truncate leading-tight">
+                <p className="text-blanc type-p14 font-medium truncate leading-tight">
                   {r.titre}
                 </p>
-                <p className="text-white/80 text-xs truncate leading-tight">
+                <p className="text-blanc/80 type-p14 truncate leading-tight">
                   {r.heure_debut.slice(0, 5)}–{r.heure_fin.slice(0, 5)}
                 </p>
               </div>
@@ -497,20 +499,20 @@ function RoomTimeline({
               return (
                 <li
                   key={r.id}
-                  className={`flex items-center justify-between text-xs rounded-lg px-3 py-2 ${
+                  className={`flex items-center justify-between type-p14 rounded-carte px-3 py-2 ${
                     isOwn
-                      ? "bg-brand-primary/10 border border-brand-primary/20"
-                      : "bg-brand-bg border border-brand-text/10"
+                      ? "bg-orange/10 border border-orange/20"
+                      : "bg-creme border border-contour"
                   }`}
                 >
                   <div className="min-w-0">
-                    <span className="font-medium text-brand-text">{r.titre}</span>
-                    <span className="text-brand-text/30 mx-1.5">·</span>
-                    <span className="text-brand-text/60">
+                    <span className="font-medium text-noir">{r.titre}</span>
+                    <span className="text-black60 mx-1.5">·</span>
+                    <span className="text-black60">
                       {r.heure_debut.slice(0, 5)} – {r.heure_fin.slice(0, 5)}
                     </span>
-                    <span className="text-brand-text/30 mx-1.5">·</span>
-                    <span className={isOwn ? "text-brand-primary font-medium" : "text-brand-text/60"}>
+                    <span className="text-black60 mx-1.5">·</span>
+                    <span className={isOwn ? "text-orange font-medium" : "text-black60"}>
                       {r.profiles?.prenom} {r.profiles?.nom}
                       {isOwn && " (moi)"}
                     </span>
@@ -572,19 +574,19 @@ function BookingModal({
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black100/40"
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative w-full sm:max-w-md card p-6 rounded-b-none sm:rounded-xl shadow-xl">
+      <div className="relative w-full sm:max-w-md card p-6 rounded-b-none sm:rounded-bloc">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-semibold text-gray-900">
+          <h3 className="type-h4 text-noir">
             Réserver une salle
           </h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 p-1 rounded-md hover:bg-gray-100"
+            className="text-gray-400 hover:text-gray-600 p-1 rounded-champ hover:bg-gray-100"
           >
             <svg
               className="w-5 h-5"
@@ -605,7 +607,7 @@ function BookingModal({
         <form onSubmit={onSubmit} className="space-y-4">
           {/* Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            <label className="block type-p14 font-medium text-gray-700 mb-1.5">
               Intitulé de la réunion
             </label>
             <input
@@ -621,7 +623,7 @@ function BookingModal({
 
           {/* Room */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            <label className="block type-p14 font-medium text-gray-700 mb-1.5">
               Salle
             </label>
             <select
@@ -640,7 +642,7 @@ function BookingModal({
 
           {/* Date */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            <label className="block type-p14 font-medium text-gray-700 mb-1.5">
               Date
             </label>
             <input
@@ -655,7 +657,7 @@ function BookingModal({
           {/* Times */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block type-p14 font-medium text-gray-700 mb-1.5">
                 Début
               </label>
               <select
@@ -685,7 +687,7 @@ function BookingModal({
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              <label className="block type-p14 font-medium text-gray-700 mb-1.5">
                 Fin
               </label>
               <select
@@ -705,9 +707,9 @@ function BookingModal({
 
           {/* Conflict warning */}
           {hasConflict && !error && (
-            <div className="bg-brand-alert/20 border border-brand-alert/40 text-brand-text text-sm px-4 py-3 rounded-lg flex items-start gap-2">
+            <div className="bg-jaune2/20 border border-jaune2/40 text-noir type-p14 px-4 py-3 rounded-carte flex items-start gap-2">
               <svg
-                className="w-4 h-4 flex-shrink-0 mt-0.5 text-brand-text/60"
+                className="w-4 h-4 flex-shrink-0 mt-0.5 text-black60"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -727,7 +729,7 @@ function BookingModal({
 
           {/* Error */}
           {error && (
-            <div className="bg-brand-error/10 border border-brand-error/20 text-brand-error text-sm px-4 py-3 rounded-lg">
+            <div className="bg-rouge/10 border border-rouge/20 text-rouge type-p14 px-4 py-3 rounded-carte">
               {error}
             </div>
           )}

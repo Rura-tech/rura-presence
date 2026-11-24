@@ -88,7 +88,7 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-brand-bg">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-creme">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
@@ -99,7 +99,7 @@ export default function AuthPage() {
             height={48}
             className="h-12 w-auto mx-auto mb-6"
           />
-          <p className="text-brand-text/50 text-sm">
+          <p className="text-black60 type-p14">
             Gestion des présences et réservations de salles
           </p>
         </div>
@@ -107,16 +107,16 @@ export default function AuthPage() {
         <div className="card p-8">
           {step === "email" ? (
             <>
-              <h2 className="text-lg font-semibold text-brand-text mb-1">
+              <h2 className="type-h4 text-noir mb-1">
                 Connexion
               </h2>
-              <p className="text-sm text-brand-text/60 mb-6">
+              <p className="type-p14 text-black60 mb-6">
                 Entrez votre adresse e-mail @rura.fr pour recevoir un code de connexion.
               </p>
 
               <form onSubmit={handleSendOtp} className="space-y-4">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-brand-text mb-1.5">
+                  <label htmlFor="email" className="block type-p14 font-medium text-noir mb-1.5">
                     Adresse e-mail
                   </label>
                   <input
@@ -130,13 +130,13 @@ export default function AuthPage() {
                     autoFocus
                     autoComplete="email"
                   />
-                  <p className="mt-1.5 text-xs text-brand-text/40">
+                  <p className="mt-1.5 type-p14 text-black60">
                     Uniquement les adresses @rura.fr sont acceptées.
                   </p>
                 </div>
 
                 {error && (
-                  <div className="bg-brand-error/10 border border-brand-error/20 text-brand-error text-sm px-4 py-3 rounded-lg">
+                  <div className="bg-rouge/10 border border-rouge/20 text-rouge type-p14 px-4 py-3 rounded-carte">
                     {error}
                   </div>
                 )}
@@ -150,16 +150,16 @@ export default function AuthPage() {
             </>
           ) : (
             <>
-              <h2 className="text-lg font-semibold text-brand-text mb-1">
+              <h2 className="type-h4 text-noir mb-1">
                 Entrez votre code
               </h2>
-              <div className="bg-brand-bg border border-brand-text/15 text-brand-text text-sm px-4 py-3 rounded-lg mb-5">
+              <div className="bg-creme border border-contour text-noir type-p14 px-4 py-3 rounded-carte mb-5">
                 Un code à 6 chiffres a été envoyé à <span className="font-medium">{email}</span>.
               </div>
 
               <form onSubmit={handleVerifyOtp} className="space-y-4">
                 <div>
-                  <label htmlFor="otp" className="block text-sm font-medium text-brand-text mb-1.5">
+                  <label htmlFor="otp" className="block type-p14 font-medium text-noir mb-1.5">
                     Code à 6 chiffres
                   </label>
                   <input
@@ -179,7 +179,7 @@ export default function AuthPage() {
                 </div>
 
                 {error && (
-                  <div className="bg-brand-error/10 border border-brand-error/20 text-brand-error text-sm px-4 py-3 rounded-lg">
+                  <div className="bg-rouge/10 border border-rouge/20 text-rouge type-p14 px-4 py-3 rounded-carte">
                     {error}
                   </div>
                 )}
@@ -190,7 +190,7 @@ export default function AuthPage() {
                   ) : "Se connecter"}
                 </button>
 
-                <button type="button" onClick={() => { setStep("email"); setOtp(""); setError(null); }} className="w-full text-sm text-brand-text/50 hover:text-brand-text text-center py-1">
+                <button type="button" onClick={() => { setStep("email"); setOtp(""); setError(null); }} className="w-full type-p14 text-black60 hover:text-noir text-center py-1">
                   ← Modifier l&apos;adresse e-mail
                 </button>
               </form>
