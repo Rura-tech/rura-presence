@@ -1,6 +1,6 @@
 import { feriesFrancais } from "./feries";
 import { parseMois } from "./mois";
-import type { StatutJour } from "./statuts";
+import { STATUTS_JOUR, type StatutJour } from "./statuts";
 
 export interface JourCalendrier {
   /** « YYYY-MM-DD » */
@@ -57,16 +57,10 @@ export function recapitulatif(
   statuts: Record<string, StatutJour | undefined>
 ): { parStatut: Record<StatutJour, number>; nonRenseigne: number; total: number } {
   const jours = joursDuMois(mois);
-  const parStatut = {
-    jour_travaille: 0,
-    repos_hebdomadaire: 0,
-    conges_payes: 0,
-    conges_supplementaires: 0,
-    jours_feries_chomes: 0,
-    jnt: 0,
-    conges_sans_solde: 0,
-    conge_exceptionnel: 0,
-  } as Record<StatutJour, number>;
+  // Dérivé de la liste des statuts : un statut ajouté ne peut pas être oublié ici.
+  const parStatut = Object.fromEntries(
+    STATUTS_JOUR.map((s) => [s.id, 0])
+  ) as Record<StatutJour, number>;
 
   let nonRenseigne = 0;
   for (const jour of jours) {
