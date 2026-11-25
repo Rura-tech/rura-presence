@@ -66,6 +66,7 @@ export interface DeclarationMensuelle {
   manager_id: string | null;
   commentaire_manager: string | null;
   submitted_at: string;
+  envoyee_at: string | null;
   decided_at: string | null;
   updated_at: string;
   profiles?: Profile;

@@ -148,6 +148,18 @@ export default function ForfaitJoursView({
         return;
       }
 
+      // Horodaté en dernier, une fois le détail écrit : c'est ce passage qui
+      // déclenche l'alerte au N+1, avec le bon nombre de jours travaillés.
+      const { error: erreurEnvoi } = await supabase
+        .from("declarations_mensuelles")
+        .update({ envoyee_at: new Date().toISOString() })
+        .eq("id", declarationId);
+
+      if (erreurEnvoi) {
+        setErreur(erreurEnvoi.message);
+        return;
+      }
+
       setSucces(true);
       router.refresh();
     } finally {
