@@ -24,7 +24,7 @@ export const STATUTS_JOUR: DefinitionStatut[] = [
   { id: "conges_payes",           label: "Congés payés",           court: "Congés payés",  classe: "bg-bleu text-noir" },
   { id: "conges_supplementaires", label: "Congés supplémentaires", court: "Congés suppl.", classe: "bg-saumon text-noir" },
   { id: "jours_feries_chomes",    label: "Jours fériés chômés",    court: "Férié",         classe: "bg-gris-disabled text-noir" },
-  { id: "jnt",                    label: "JNT",                    court: "JNT",           classe: "bg-jaune2 text-noir" },
+  { id: "jnt",                    label: "JNT / RTT",              court: "JNT / RTT",     classe: "bg-jaune2 text-noir" },
   { id: "conges_sans_solde",      label: "Congés sans solde",      court: "Sans solde",    classe: "bg-orange2 text-noir" },
   { id: "conge_exceptionnel",     label: "Congé exceptionnel",     court: "Exceptionnel",  classe: "bg-orange text-blanc" },
 ];
