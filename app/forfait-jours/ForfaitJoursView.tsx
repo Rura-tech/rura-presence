@@ -69,9 +69,9 @@ export default function ForfaitJoursView({
     setErreur(null);
     setSucces(false);
 
-    const nbJours = Number(jours.replace(",", "."));
-    if (!jours.trim() || Number.isNaN(nbJours) || nbJours < 0 || nbJours > 31) {
-      setErreur("Indiquez un nombre de jours travaillés entre 0 et 31.");
+    const nbJours = Number(jours.trim());
+    if (!jours.trim() || !Number.isInteger(nbJours) || nbJours < 0 || nbJours > 31) {
+      setErreur("Indiquez un nombre entier de jours travaillés, entre 0 et 31.");
       return;
     }
     if (repos === null) {
@@ -150,15 +150,20 @@ export default function ForfaitJoursView({
               Jours travaillés
             </label>
             <input
-              type="text"
-              inputMode="decimal"
+              type="number"
+              inputMode="numeric"
+              min={0}
+              max={31}
+              step={1}
               value={jours}
               onChange={(e) => setJours(e.target.value)}
-              placeholder="18,5"
+              placeholder="18"
               disabled={!modifiable}
               className="input-field mb-1"
             />
-            <p className="type-p14 text-black60 mb-4">Demi-journées acceptées (ex. 18,5).</p>
+            <p className="type-p14 text-black60 mb-4">
+              Une heure travaillée dans la journée compte pour un jour entier.
+            </p>
 
             <label className="block type-p14 font-medium text-noir mb-1.5">
               Charge ressentie
