@@ -7,7 +7,7 @@ import SousNavAdmin from "../SousNavAdmin";
 import CalendrierMois from "../../forfait-jours/CalendrierMois";
 import Recapitulatif from "../../forfait-jours/Recapitulatif";
 import { DifficulteBadge, ReposBadge, StatutBadge } from "../../forfait-jours/badges";
-import { libelleMois, moisEnCours, moisStr, parseMois } from "@/lib/mois";
+import { libelleMois, moisEnCours, moisStr, parseMois, PREMIER_MOIS_SUIVI } from "@/lib/mois";
 import type { NavState } from "@/lib/nav";
 import type { DeclarationMensuelle, Profile } from "@/lib/types";
 
@@ -35,6 +35,7 @@ export default function DeclarationsView({
 }: Props) {
   const [detailOuvert, setDetailOuvert] = useState<string | null>(null);
   const estMoisCourant = mois === moisEnCours();
+  const estPremierMois = mois === PREMIER_MOIS_SUIVI;
 
   return (
     <div className="min-h-screen bg-blanc">
@@ -53,14 +54,22 @@ export default function DeclarationsView({
           </div>
 
           <div className="flex items-center gap-2">
-            <Link
-              href={`/administration/declarations?mois=${moisDecale(mois, -1)}`}
-              className="btn-secondary p-2.5"
-            >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </Link>
+            {estPremierMois ? (
+              <span className="btn-secondary p-2.5 text-black60 cursor-not-allowed" aria-disabled>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </span>
+            ) : (
+              <Link
+                href={`/administration/declarations?mois=${moisDecale(mois, -1)}`}
+                className="btn-secondary p-2.5"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </Link>
+            )}
             <span className="type-p14 font-bold text-noir capitalize min-w-[8rem] text-center">
               {libelleMois(mois)}
             </span>

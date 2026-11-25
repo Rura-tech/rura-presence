@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { requireProfile } from "@/lib/session";
 import ForfaitJoursView from "./ForfaitJoursView";
-import { moisEnCours } from "@/lib/mois";
+import { moisEnCours, PREMIER_MOIS_SUIVI } from "@/lib/mois";
 import type { DeclarationMensuelle } from "@/lib/types";
 
 export default async function ForfaitJoursPage({
@@ -17,7 +17,11 @@ export default async function ForfaitJoursPage({
   }
 
   const demande = searchParams.mois ?? "";
-  const mois = /^\d{4}-\d{2}-01$/.test(demande) && demande <= moisEnCours() ? demande : moisEnCours();
+  const valide =
+    /^\d{4}-\d{2}-01$/.test(demande) &&
+    demande <= moisEnCours() &&
+    demande >= PREMIER_MOIS_SUIVI;
+  const mois = valide ? demande : moisEnCours();
 
   const [{ data: declaration }, { data: historique }] = await Promise.all([
     supabase

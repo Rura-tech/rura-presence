@@ -1,6 +1,9 @@
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
+/** Le suivi du forfait jours démarre en juin 2026 : rien avant n'est déclarable. */
+export const PREMIER_MOIS_SUIVI = "2026-06-01";
+
 /** "2026-11-01" -> Date locale (évite le décalage de fuseau de new Date("…")). */
 export function parseMois(mois: string): Date {
   const [annee, m] = mois.split("-").map(Number);
@@ -34,4 +37,9 @@ export function moisEnCours(): string {
 export function moisPrecedent(): string {
   const d = new Date();
   return moisStr(new Date(d.getFullYear(), d.getMonth() - 1, 1));
+}
+
+/** Les mois déclarables : de juin 2026 au mois en cours, du plus récent au plus ancien. */
+export function moisDeclarables(): string[] {
+  return derniersMois(36).filter((m) => m >= PREMIER_MOIS_SUIVI);
 }

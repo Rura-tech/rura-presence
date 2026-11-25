@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { derniersMois, libelleMois } from "@/lib/mois";
+import { libelleMois, moisDeclarables } from "@/lib/mois";
 import type { DeclarationMensuelle } from "@/lib/types";
-
-const NB_MOIS = 12;
 
 interface Props {
   moisActif: string;
@@ -21,7 +19,7 @@ const PASTILLE: Record<string, string> = {
 
 export default function ColonneMois({ moisActif, historique, base }: Props) {
   const parMois = new Map(historique.map((d) => [d.mois, d]));
-  const mois = derniersMois(NB_MOIS);
+  const mois = moisDeclarables();
 
   return (
     <nav aria-label="Mes mois">

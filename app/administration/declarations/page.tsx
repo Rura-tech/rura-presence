@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { requireProfile } from "@/lib/session";
 import DeclarationsView from "./DeclarationsView";
-import { moisEnCours } from "@/lib/mois";
+import { moisEnCours, PREMIER_MOIS_SUIVI } from "@/lib/mois";
 import type { DeclarationMensuelle, Profile } from "@/lib/types";
 
 export default async function DeclarationsAdminPage({
@@ -16,7 +16,11 @@ export default async function DeclarationsAdminPage({
   }
 
   const demande = searchParams.mois ?? "";
-  const mois = /^\d{4}-\d{2}-01$/.test(demande) && demande <= moisEnCours() ? demande : moisEnCours();
+  const valide =
+    /^\d{4}-\d{2}-01$/.test(demande) &&
+    demande <= moisEnCours() &&
+    demande >= PREMIER_MOIS_SUIVI;
+  const mois = valide ? demande : moisEnCours();
 
   const [{ data: declarations }, { data: concernes }] = await Promise.all([
     supabase
