@@ -4,7 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import NavBar from "../../NavBar";
-import { ChargeBadge, ReposBadge, StatutBadge } from "../badges";
+import { DifficulteBadge, ReposBadge, StatutBadge } from "../badges";
+import CalendrierMois from "../CalendrierMois";
+import Recapitulatif from "../Recapitulatif";
 import SousNav from "../SousNav";
 import type { NavState } from "@/lib/nav";
 import type { DeclarationMensuelle, Profile } from "@/lib/types";
@@ -32,6 +34,7 @@ export default function EquipeView({
   const [echangePour, setEchangePour] = useState<string | null>(null);
   const [messageEchange, setMessageEchange] = useState("");
   const [erreur, setErreur] = useState<string | null>(null);
+  const [detailOuvert, setDetailOuvert] = useState<string | null>(null);
 
   const aValider = declarations.filter((d) => d.statut === "soumise");
   const historique = declarations.filter((d) => d.statut !== "soumise");
@@ -63,6 +66,30 @@ export default function EquipeView({
     } finally {
       setTraitement(null);
     }
+  }
+
+  function detailJours(d: DeclarationMensuelle) {
+    const statuts = Object.fromEntries(
+      (d.jours_declares ?? []).map((j) => [j.jour, j.statut])
+    );
+
+    return (
+      <div className="mt-3">
+        <button
+          onClick={() => setDetailOuvert(detailOuvert === d.id ? null : d.id)}
+          className="type-p14 text-orange hover:underline"
+        >
+          {detailOuvert === d.id ? "Masquer le détail des jours" : "Voir le détail des jours"}
+        </button>
+
+        {detailOuvert === d.id && (
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,280px)] items-start mt-3">
+            <CalendrierMois mois={d.mois} statuts={statuts} compact />
+            <Recapitulatif mois={d.mois} statuts={statuts} />
+          </div>
+        )}
+      </div>
+    );
   }
 
   function nomDe(d: DeclarationMensuelle) {
@@ -114,15 +141,15 @@ export default function EquipeView({
                     <span className="type-p14 text-black60">
                       {d.jours_travailles} jour{d.jours_travailles > 1 ? "s" : ""}
                     </span>
-                    <ChargeBadge charge={d.charge} />
                     <ReposBadge respectes={d.repos_respectes} />
+                    <DifficulteBadge difficulte={d.difficulte} />
                   </div>
 
                   {d.commentaire && (
                     <p className="type-p14 text-black60 italic mb-3">{d.commentaire}</p>
                   )}
 
-                  {(d.charge === "surcharge" || !d.repos_respectes) && (
+                  {(!d.repos_respectes || d.difficulte) && (
                     <div className="flex items-start gap-1.5 bg-jaune2/20 border border-jaune2 text-noir type-p14 rounded-carte px-2.5 py-1.5 mb-3">
                       <svg className="w-3.5 h-3.5 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -131,11 +158,14 @@ export default function EquipeView({
                           clipRule="evenodd"
                         />
                       </svg>
-                      Ce mois appelle un échange : {d.charge === "surcharge" ? "surcharge signalée" : ""}
-                      {d.charge === "surcharge" && !d.repos_respectes ? " et " : ""}
-                      {!d.repos_respectes ? "temps de repos non respectés" : ""}.
+                      Ce mois appelle un échange :{" "}
+                      {d.difficulte ? "une difficulté est signalée" : ""}
+                      {d.difficulte && !d.repos_respectes ? " et " : ""}
+                      {!d.repos_respectes ? "les temps de repos n'ont pas été respectés" : ""}.
                     </div>
                   )}
+
+                  {detailJours(d)}
 
                   {echangePour === d.id ? (
                     <div>
@@ -228,8 +258,8 @@ export default function EquipeView({
                     <span className="type-p14 text-black60">
                       {d.jours_travailles} jour{d.jours_travailles > 1 ? "s" : ""}
                     </span>
-                    <ChargeBadge charge={d.charge} />
                     <ReposBadge respectes={d.repos_respectes} />
+                    <DifficulteBadge difficulte={d.difficulte} />
                     <span className="ml-auto">
                       <StatutBadge statut={d.statut} />
                     </span>
@@ -240,6 +270,7 @@ export default function EquipeView({
                   {d.commentaire_manager && (
                     <p className="type-p14 text-orange mt-2">Vous : {d.commentaire_manager}</p>
                   )}
+                  {detailJours(d)}
                 </li>
               ))}
             </ul>

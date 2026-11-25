@@ -1,6 +1,7 @@
+import type { StatutJour } from "./statuts";
+
 export type TypeContrat = "non_cadre" | "cadre_heures" | "cadre_forfait_jours";
 export type RoleApp = "salarie" | "admin_rh";
-export type ChargeRessentie = "sous_charge" | "normale" | "surcharge";
 export type StatutDeclaration = "soumise" | "validee" | "echange_demande";
 
 export interface Profile {
@@ -58,8 +59,8 @@ export interface DeclarationMensuelle {
   user_id: string;
   mois: string;
   jours_travailles: number;
-  charge: ChargeRessentie;
   repos_respectes: boolean;
+  difficulte: boolean;
   commentaire: string | null;
   statut: StatutDeclaration;
   manager_id: string | null;
@@ -68,13 +69,14 @@ export interface DeclarationMensuelle {
   decided_at: string | null;
   updated_at: string;
   profiles?: Profile;
+  jours_declares?: JourDeclare[];
 }
 
-export const LIBELLES_CHARGE: Record<ChargeRessentie, string> = {
-  sous_charge: "Sous-charge",
-  normale: "Normale",
-  surcharge: "Surcharge",
-};
+export interface JourDeclare {
+  declaration_id: string;
+  jour: string;
+  statut: StatutJour;
+}
 
 export const LIBELLES_STATUT: Record<StatutDeclaration, string> = {
   soumise: "En attente de validation",

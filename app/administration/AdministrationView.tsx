@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import NavBar from "../NavBar";
+import SousNavAdmin from "./SousNavAdmin";
 import type { NavState } from "@/lib/nav";
 import type { Profile, TypeContrat } from "@/lib/types";
 import { LIBELLES_CONTRAT } from "@/lib/types";
@@ -81,6 +82,8 @@ export default function AdministrationView({ currentProfile, navState, profils }
       <NavBar currentProfile={currentProfile} activeTab="administration" navState={navState} />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-2 py-6">
+        <SousNavAdmin actif="salaries" />
+
         <div className="mb-6">
           <h2 className="type-h3 text-noir">Administration</h2>
           <p className="type-p14 text-black60 mt-0.5">

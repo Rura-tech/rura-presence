@@ -1,9 +1,14 @@
 import { redirect } from "next/navigation";
 import { requireProfile } from "@/lib/session";
 import ForfaitJoursView from "./ForfaitJoursView";
+import { moisEnCours } from "@/lib/mois";
 import type { DeclarationMensuelle } from "@/lib/types";
 
-export default async function ForfaitJoursPage() {
+export default async function ForfaitJoursPage({
+  searchParams,
+}: {
+  searchParams: { mois?: string };
+}) {
   const { supabase, profile, navState } = await requireProfile();
 
   if (profile.type_contrat !== "cadre_forfait_jours") {
@@ -11,11 +16,22 @@ export default async function ForfaitJoursPage() {
     redirect(navState.estManager ? "/forfait-jours/equipe" : "/");
   }
 
-  const { data: declarations } = await supabase
-    .from("declarations_mensuelles")
-    .select("*")
-    .eq("user_id", profile.id)
-    .order("mois", { ascending: false });
+  const demande = searchParams.mois ?? "";
+  const mois = /^\d{4}-\d{2}-01$/.test(demande) && demande <= moisEnCours() ? demande : moisEnCours();
+
+  const [{ data: declaration }, { data: historique }] = await Promise.all([
+    supabase
+      .from("declarations_mensuelles")
+      .select("*, jours_declares(*)")
+      .eq("user_id", profile.id)
+      .eq("mois", mois)
+      .maybeSingle(),
+    supabase
+      .from("declarations_mensuelles")
+      .select("id, mois, jours_travailles, statut, repos_respectes")
+      .eq("user_id", profile.id)
+      .order("mois", { ascending: false }),
+  ]);
 
   let managerNom: string | null = null;
   if (profile.manager_id) {
@@ -31,7 +47,9 @@ export default async function ForfaitJoursPage() {
     <ForfaitJoursView
       currentProfile={profile}
       navState={navState}
-      declarations={(declarations ?? []) as DeclarationMensuelle[]}
+      mois={mois}
+      declaration={(declaration ?? null) as DeclarationMensuelle | null}
+      historique={(historique ?? []) as DeclarationMensuelle[]}
       managerNom={managerNom}
     />
   );

@@ -14,7 +14,7 @@ export default async function EquipePage() {
   const [{ data: declarations }, { data: equipe }] = await Promise.all([
     supabase
       .from("declarations_mensuelles")
-      .select("*, profiles!declarations_mensuelles_user_id_fkey(*)")
+      .select("*, profiles!declarations_mensuelles_user_id_fkey(*), jours_declares(*)")
       .eq("manager_id", profile.id)
       .order("mois", { ascending: false }),
     supabase
